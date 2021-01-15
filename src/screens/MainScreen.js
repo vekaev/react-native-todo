@@ -3,13 +3,18 @@ import { StyleSheet, View, Image } from 'react-native';
 import { AddTodo } from '../components/todo/AddTodo';
 import { TodoList } from '../components/todo/TodoList';
 import { AppText } from '../components/ui/AppText';
+import { useScreenStore } from '../context/screen/screenState';
+import { useTodoStore } from '../context/todo/TodoState';
 
-export const MainScreen = ({list, handleAdd, handleDelete, handleOpenTodo}) => {
+export const MainScreen = () => {
+  const { list, addTodo, removeTodo  } = useTodoStore()
+  const { updateCurrentScreen} = useScreenStore()
+
   return(
     <View style={styles.main}>
-      <AddTodo addTodo={handleAdd}/>
+      <AddTodo addTodo={addTodo}/>
       {list?.length > 0 ? 
-        <TodoList list={list} removeTodo={handleDelete} openTodo={handleOpenTodo}/> : 
+        <TodoList list={list} removeTodo={removeTodo} openTodo={updateCurrentScreen}/> : 
         <View style={styles.imgWrapper}>
           <Image style={styles.image} resizeMode={'contain'} source={require('../../assets/favicon.png')}/>
           <AppText>No todos</AppText>

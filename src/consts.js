@@ -1,0 +1,1 @@
+export const FIREBASE_URL = 'https://react-native-todo-39a4c-default-rtdb.firebaseio.com/'

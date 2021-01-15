@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { StyleSheet, View, TextInput, Keyboard, Alert } from 'react-native';
+import React, { useRef, useState } from 'react'
+import { StyleSheet, View, TextInput, Keyboard, Alert, Dimensions } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'
 import { THEME } from '../../theme';
 
 export const AddTodo = ({addTodo}) => {
+  const ref = useRef(null)
   const [value, setValue] = useState('')
 
   const handleClick = () => {
@@ -14,11 +15,13 @@ export const AddTodo = ({addTodo}) => {
     } else {
       Alert.alert('Cann`t be empty')
     }
+    ref.current?.focus()
   }
 
   return(
     <View style={styles.block}>
       <TextInput 
+        ref={ref}
         onSubmitEditing={handleClick}
         placeholder={'Fill new todo'}
         value={value} 
@@ -41,13 +44,15 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   input: {
-    width: '70%',
+    width: Dimensions.get('window').width / (12 / 8),
     borderBottomWidth: 2,
     borderColor: THEME.COLOR_BLACK,
     borderStyle: 'solid',
     padding: 10,
   },
   btn: {
-    backgroundColor: THEME.COLOR_RED
+    width: Dimensions.get('window').width / (12 / 3),
+    backgroundColor: THEME.COLOR_RED,
+    textAlign: 'center'
   }
 })
